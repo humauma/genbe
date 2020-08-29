@@ -1,6 +1,6 @@
 package com.huma.genbe.model.dto;
 
-public class PersonDtoInput {
+public class PersonDtoInput extends ErrorDtoInput {
 	// private Integer idPers;
 	private String nik;
 	private String name;

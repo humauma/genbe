@@ -8,6 +8,6 @@ import com.huma.genbe.model.entity.PersonEntity;
 
 @Repository
 public interface PersonRepository extends JpaRepository<PersonEntity, String> {
-	List<PersonEntity> findByNikEntContaining(String nik);
+	List<PersonEntity> findByNikEntLike(String nik);
 
 }

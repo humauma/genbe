@@ -26,7 +26,7 @@ public class PendidikanController {
 
 	@PostMapping("/{idPerson}")
 	public List<PendidikanDtoInput> insert(@RequestBody List<PendidikanDtoInput> dto, @PathVariable Integer idPerson) {
-		//List<PendidikanDtoInput> personList = pendRep.findAllById(ids)
+		//List<PendidikanDtoInput> personList = pendRep.findAllById(ids) //saya bingung gimana ngehubungin id nya kak
 
 		List<PendidikanEntity> pendidikanEntity = dto.stream().map(this::convertToEntity).collect(Collectors.toList());
 		

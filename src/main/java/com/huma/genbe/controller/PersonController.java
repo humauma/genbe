@@ -3,7 +3,6 @@ package com.huma.genbe.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.huma.genbe.model.dto.ErrorDto;
 import com.huma.genbe.model.dto.PersonDtoInput;
 import com.huma.genbe.model.dto.PersonDtoOutput;
 import com.huma.genbe.model.entity.BiodataEntity;
@@ -12,6 +11,8 @@ import com.huma.genbe.repository.BiodataRepository;
 import com.huma.genbe.repository.PersonRepository;
 import com.huma.genbe.service.PersonService;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,21 +33,44 @@ public class PersonController {
 
 	@GetMapping("/{nik}")
 	public List<PersonDtoOutput> get(@PathVariable String nik) {
-		List<PersonEntity> personEntityList = perRep.findByNikEntContaining(nik);
+		List<PersonEntity> personEntityList = perRep.findByNikEntLike(nik);
 		List<PersonDtoOutput> personDto = personEntityList.stream().map(this::convertToDtoOut)
 				.collect(Collectors.toList());
 		return personDto;
 	}
 
 	@PostMapping
-	public ErrorDto insert(@RequestBody PersonDtoInput dto) {
-		PersonEntity personEntity = convertToEntityPer(dto);
-		perRep.save(personEntity);
-		BiodataEntity biodataEntity = convertToEntityBio(dto);
-		bioRep.save(biodataEntity);
-		ErrorDto errorDto = new ErrorDto();
-		perServ.error(personEntity);
-		return errorDto;
+	public PersonDtoInput insert(@RequestBody PersonDtoInput dto) {
+		// ErrorDtoInput errorDto = new ErrorDtoInput();
+		java.sql.Date dob = dto.getTgl();
+		LocalDate today = LocalDate.now();
+		LocalDate birthDate = dob.toLocalDate();
+		Period p = Period.between(birthDate, today);
+		if (((p.getYears() >= 30)) && (dto.getNik().length() == 16)) {
+			dto.setStatus("true");
+			dto.setMessage("data berhasil masuk");
+			PersonEntity personEntity = convertToEntityPer(dto);
+			perRep.save(personEntity);
+			BiodataEntity biodataEntity = convertToEntityBio(dto);
+			bioRep.save(biodataEntity);
+			return dto;
+		} else if (((p.getYears() <= 30)) && (dto.getNik().length() == 16)) {
+			dto.setStatus("false");
+			dto.setMessage("data gagal masuk, umur kurang dari 30");
+			return dto;
+		} else if (((p.getYears() <= 30)) && (dto.getNik().length() != 16)) {
+			dto.setStatus("false");
+			dto.setMessage("data gagal masuk, nik tidak 16digit");
+			return dto;
+		} // else {
+		dto.setStatus("false");
+		dto.setMessage("data gagal masuk, nik tidak 16digit dan umur kurang dari 30");
+		return dto;
+		// }
+		// ErrorDtoInput errorDto = new ErrorDtoInput();
+		// perServ.error(dto);
+		// return dto;
+
 	}
 
 	// Convert to Entity
