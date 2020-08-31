@@ -5,9 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+//import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -29,7 +29,8 @@ public class BiodataEntity {
 	private String tempatEnt;
 
 	@OneToOne
-	@PrimaryKeyJoinColumn(name = "idperson", referencedColumnName = "id_person")
+//	@PrimaryKeyJoinColumn(name = "idperson", referencedColumnName = "id_person")
+	@JoinColumn(name = "idperson", referencedColumnName = "id_person", unique = true, nullable = false)
 	private PersonEntity person;
 
 	public Integer getIdBioEnt() {

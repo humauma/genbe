@@ -1,6 +1,6 @@
 package com.huma.genbe.model.dto;
 
-public class PersonDtoInput extends ErrorDtoInput {
+public class PersonDtoInput {
 	// private Integer idPers;
 	private String nik;
 	private String name;
@@ -8,6 +8,7 @@ public class PersonDtoInput extends ErrorDtoInput {
 	private String hp;
 	private java.sql.Date tgl;
 	private String tempatLahir;
+//	private ErrorDtoInput errorDto;
 
 //	public Integer getIdPers() {
 //		return idPers;
@@ -65,4 +66,11 @@ public class PersonDtoInput extends ErrorDtoInput {
 		this.tempatLahir = tempatLahir;
 	}
 
+//	public ErrorDtoInput getErrorDto() {
+//		return errorDto;
+//	}
+//
+//	public void setErrorDto(ErrorDtoInput errorDto) {
+//		this.errorDto = errorDto;
+//	}
 }

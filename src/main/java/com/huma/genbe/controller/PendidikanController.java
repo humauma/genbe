@@ -3,6 +3,7 @@ package com.huma.genbe.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.huma.genbe.model.dto.ErrorDtoInput;
 import com.huma.genbe.model.dto.PendidikanDtoInput;
 import com.huma.genbe.model.entity.PendidikanEntity;
 import com.huma.genbe.model.entity.PersonEntity;
@@ -25,23 +26,36 @@ public class PendidikanController {
 	}
 
 	@PostMapping("/{idPerson}")
-	public List<PendidikanDtoInput> insert(@RequestBody List<PendidikanDtoInput> dto, @PathVariable Integer idPerson) {
-		//List<PendidikanDtoInput> personList = pendRep.findAllById(ids) //saya bingung gimana ngehubungin id nya kak
+	public ErrorDtoInput insert(@RequestBody List<PendidikanDtoInput> dto, @RequestParam Integer idPerson) {
+		ErrorDtoInput errorDto = new ErrorDtoInput();
+		try {
+			if (perRep.findById(idPerson).isPresent()) {
+				List<PendidikanEntity> pendidikanEntity = dto.stream().map(x -> convertToEntity(x, idPerson))
+						.collect(Collectors.toList());
+				pendRep.saveAll(pendidikanEntity);
+			}
+			errorDto.setStatus("true");
+			errorDto.setMessage("data berhasil masuk");
+		} catch (Exception e) {
+			errorDto.setStatus("false");
+			errorDto.setMessage("data gagal masuk");
+		}
 
-		List<PendidikanEntity> pendidikanEntity = dto.stream().map(this::convertToEntity).collect(Collectors.toList());
-		
-		pendRep.saveAll(pendidikanEntity);
-
-		return dto;
+		return errorDto;
 	}
 
 	// Convert to Entity
-	private PendidikanEntity convertToEntity(PendidikanDtoInput dto) {
+	private PendidikanEntity convertToEntity(PendidikanDtoInput dto, Integer idPerson) {
 		PendidikanEntity pendidikanEntity = new PendidikanEntity();
 		pendidikanEntity.setJenjangEnt(dto.getJenjang());
 		pendidikanEntity.setInstitusiEnt(dto.getInstitusi());
 		pendidikanEntity.setTahunMasukEnt(dto.getTahunMasuk());
 		pendidikanEntity.setTahunLulusEnt(dto.getTahunLulus());
+		if (perRep.findById(idPerson).isPresent()) {
+			PersonEntity personEntity = perRep.findById(idPerson).get();
+			pendidikanEntity.setPerson(personEntity);
+		}
+
 		return pendidikanEntity;
 	}
 

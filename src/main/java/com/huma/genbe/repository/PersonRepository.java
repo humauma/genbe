@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.huma.genbe.model.entity.PersonEntity;
 
 @Repository
-public interface PersonRepository extends JpaRepository<PersonEntity, String> {
+public interface PersonRepository extends JpaRepository<PersonEntity, Integer> {
 	List<PersonEntity> findByNikEntLike(String nik);
 
 }

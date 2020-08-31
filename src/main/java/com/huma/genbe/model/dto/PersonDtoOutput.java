@@ -2,7 +2,7 @@ package com.huma.genbe.model.dto;
 
 //import java.util.*;
 
-public class PersonDtoOutput extends ErrorDtoInput {
+public class PersonDtoOutput {
 	private String nik;
 	private String name;
 	private String adress;
