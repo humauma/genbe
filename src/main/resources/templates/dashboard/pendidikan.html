@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}" xmlns:th="http://www.thymeleaf.org" style="height: auto;">
+
+<div class="row mb-2" layout:fragment="content-header">
+    <div class="col-sm-6">
+        <h1>Style 3</h1>
+    </div>
+    <!--             <div class="col-sm-6"> -->
+    <!--               <ol class="breadcrumb float-sm-right"> -->
+    <!--                 <li class="breadcrumb-item"><a href="#">Home</a></li> -->
+    <!--                 <li class="breadcrumb-item active">General Form</li> -->
+    <!--               </ol> -->
+    <!--             </div> -->
+</div>
+
+<div layout:fragment="content-body">
+
+    <form role="form" id="formprofile">
+        <div class="row">
+
+            <div class="col-md-6 d-flex">
+                <div class="card card-primary flex-fill">
+                    <div class="card-header">
+                        <h3 class="card-title">Profile Input</h3>
+                    </div>
+                    <!-- /.card-header -->
+
+                    <div class="card-body">
+
+
+
+
+                        <div class="form-group">
+                            <label for="nama">Name</label> <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adress">Adress</label> <input type="text" class="form-control" id="adress"
+                                name="adress" placeholder="Adress">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthday">Birthday</label> <input type="date" class="form-control" id="birthday"
+                                name="birthday">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filler"> </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filler"> </label>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-6 d-flex">
+                <div class="card card-success flex-fill">
+                    <div class="card-header">
+                        <h3 class="card-title">Profile Input</h3>
+                    </div>
+                    <!-- /.card-header -->
+
+                    <div class="card-body">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="age">Age:</label> <input class="form-control" type="text" id="age"
+                                    name="age">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="religion">Religion:</label> <select class="form-control" id="religion"
+                                    name="religion">
+                                    <option value="Islam">Islam</option>
+                                    <option value="Katolik">Katolik</option>
+                                    <option value="Kristen">Kristen</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Buddha">Buddha</option>
+                                    <option value="Khonghucu">Khonghucu</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="gender">Gender:</label>
+                                <!-- radio -->
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="gender" name="gender"
+                                            value="Male"> <label class="form-check-label">Male</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="gender" name="gender"
+                                            value="Female"> <label class="form-check-label">Female</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="gender" name="gender"
+                                            value="Other"> <label class="form-check-label">Other</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary success">Submit</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+
+
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Table Profile</h3>
+        </div>
+        <div class="card-body">
+            <table id="mytable" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Adress</th>
+                        <th>Birthday</th>
+                        <th>Age</th>
+                        <th>Religion</th>
+                        <th>Gender</th>
+                    </tr>
+                </thead>
+                <tbody id="bodytable">
+
+                </tbody>
+            </table>
+            <div class="card-footer">
+                <button id="resetbutton" type="reset" class="btn btn-primary resetbutt">Reset</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<th:block layout:fragment="add-scripts">
+    <script type="text/javascript">
+        $('#formprofile').submit(
+
+            function (event) {
+                event.preventDefault();
+                var $inputs = $('#formprofile :input');
+                var values = {};
+                $inputs.each(function () {
+                });
+                $('#bodytable').append(
+                    "<tr><td>" + $("#name").val() + "</td><td>"
+                    + $("#adress").val() + "</td><td>"
+                    + $("#birthday").val() + "</td><td>"
+                    + $("#age").val() + "</td><td>"
+                    + $('#religion option:selected').val()
+                    + "</td><td>"
+                    + $('input[name=gender]:checked').val()
+                    + "</td></tr>");
+                $("input[type=text],textarea").val("");
+                $("input[type=date],textarea").val("");
+
+            });
+
+
+
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#resetbutton').click(function () {
+                $("#mytable").find("tr:gt(0)").remove();
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('.success').click(function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                onOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Profile entered successfully'
+            })
+        });
+
+        $('.resetbutt').click(function () {
+
+            Swal.fire({
+                title: 'Table is reset',
+                width: 600,
+                padding: '3em',
+                background: '#fff url(/images/trees.png)',
+                backdrop: `
+				    rgba(192,192,192,0.3)
+				    url("https://tenor.com/view/nyancat-gif-5210927")
+				    left top
+				    no-repeat
+				  `
+            })
+
+        });
+    </script>
+
+
+
+</th:block>
+
+
+</html>
