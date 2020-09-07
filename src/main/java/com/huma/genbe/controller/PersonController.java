@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/person")
@@ -36,6 +37,15 @@ public class PersonController {
 	@Autowired
 	private PersonService perServ;
 
+	@GetMapping("/all")
+	public List<PersonDtoOutput> get() {
+		List<PersonEntity> personEntity = perRep.findAll();
+		List<PersonDtoOutput> personDto = personEntity.stream().map(this::convertToDtoOut).collect(Collectors.toList());
+		return personDto;
+	}
+	
+	
+	
 	@GetMapping("/{nik}")
 	public List<Object> get(@PathVariable String nik) {
 //	public PersonDtoOutput get(@PathVariable String nik) {
@@ -129,7 +139,7 @@ public class PersonController {
 		personDto.setTgl(personEntity.getBiodataEnt().getTglEnt());
 		personDto.setTmptLahir(personEntity.getBiodataEnt().getTmptLahirEnt());
 		perServ.hitungUmur(personEntity.getBiodataEnt().getTglEnt(), personDto);
-		
+		personDto.setPddknTerakhir(pendRep.pendidikanTerakhir(personEntity.getIdPerEnt()));
 		return personDto;
 	}
 
