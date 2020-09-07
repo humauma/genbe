@@ -55,9 +55,9 @@ public class PersonController {
 		if (nik.length() == 16) {
 			if (perRep.findByNikEntLike(nik).isEmpty() == false) {
 				PersonEntity personEntityList = perRep.findByNikEntLike(nik).get(0);
-				int idPerson = personEntityList.getIdPerEnt();
+				//int idPerson = personEntityList.getIdPerEnt();
 				PersonDtoOutput personDto = convertToDtoOut(personEntityList);
-				personDto.setPddknTerakhir(pendRep.pendidikanTerakhir(idPerson));
+				//personDto.setPddknTerakhir(pendRep.pendidikanTerakhir(idPerson));
 				errorDto.setStatus("true");
 				errorDto.setMessage("success");
 				errorDto.setData(personDto);

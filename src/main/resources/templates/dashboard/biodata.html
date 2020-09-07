@@ -1,164 +1,115 @@
 <!DOCTYPE html>
-<html layout:decorate="~{base}" xmlns:th="http://www.thymeleaf.org"
-	style="height: auto;">
+<html layout:decorate="~{base}" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
 
 <div class="row mb-2" layout:fragment="content-header">
 	<div class="col-sm-6">
 		<h1>Input Profile</h1>
 	</div>
-	<!--             <div class="col-sm-6"> -->
-	<!--               <ol class="breadcrumb float-sm-right"> -->
-	<!--                 <li class="breadcrumb-item"><a href="#">Home</a></li> -->
-	<!--                 <li class="breadcrumb-item active">General Form</li> -->
-	<!--               </ol> -->
-	<!--             </div> -->
+	<!-- 	<div class="col-sm-6"> -->
+	<!-- 		<ol class="breadcrumb float-sm-right"> -->
+	<!-- 			<li class="breadcrumb-item"><a href="#">Home</a></li> -->
+	<!-- 			<li class="breadcrumb-item active">General Form</li> -->
+	<!-- 		</ol> -->
+	<!-- 	</div> -->
 </div>
 
 <div layout:fragment="content-body">
 
-	<div class="card card-primary">
-		<div class="card-header">
-			<h3 class="card-title">Biodata</h3>
-		</div>
-		<!-- /.card-header -->
-		<!-- form start -->
-		<form role="form" id="formprofile">
-			<div class="card-body">
-
-				<div class="form-group">
-					<label for="nama">Nik</label> <input type="text"
-						class="form-control" id="nik" name="nik" placeholder="Nik">
-				</div>
-
-				<div class="form-group">
-					<label>Nama</label> <input type="text"
-						class="form-control" id="name" name="name" placeholder="Nama">
-				</div>
-
-				<div class="form-group">
-					<label>Alamat</label> <input type="text"
-						class="form-control" id="adress" name="adress"
-						placeholder="Alamat">
-				</div>
-				
-				<div class="form-group">
-					<label>Nomor hp</label> <input type="text"
-						class="form-control" id="hp" name="hp" placeholder="Nomor hp">
-				</div>
-
-				<div class="form-group">
-					<label>Tanggal Lahir</label> <input type="date"
-						class="form-control" id="tgl" name="tgl">
-				</div>
-
-				<div class="form-group">
-					<label>Tempat Lahir</label> <input class="form-control"
-						type="text" id="tempatLahir" name="tempatLahir">
-
-				</div>
-
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<button class="btn btn-block btn-outline-primary btn-lg"
+					id="btn-tambah-biodata">Tambah Data</button>
 			</div>
-
+			<!-- /.card-header -->
+			<div class="card-body table-responsive">
+				<table class="table table-striped table-bordered table-hover nowrap"
+					id="tableBiodata" style="width: 100%"></table>
+			</div>
 			<!-- /.card-body -->
+		</div>
+		<!-- /.card -->
+	</div>
+	<!-- /.col -->
 
-			<div class="card-footer">
-				<button id="button" type="submit" class="btn btn-primary success">Submit</button>
+	<div class="modal fade" id="modal-biodata">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Form Biodata</h4>
+					<button aria-label="Close" class="close" data-dismiss="modal"
+						type="button">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="card-header"></div>
+					<form id="formprofile" role="form">
+						<input name="id" type="hidden" />
+
+						<div class="form-group">
+							<label for="nama">Nik</label> <input type="text"
+								class="form-control" id="nik" name="nik" placeholder="Nik">
+						</div>
+
+						<div class="form-group">
+							<label>Nama</label> <input type="text" class="form-control"
+								id="name" name="name" placeholder="Nama">
+						</div>
+
+						<div class="form-group">
+							<label>Alamat</label> <input type="text" class="form-control"
+								id="adress" name="adress" placeholder="Alamat">
+						</div>
+
+						<div class="form-group">
+							<label>Nomor hp</label> <input type="text" class="form-control"
+								id="hp" name="hp" placeholder="Nomor hp">
+						</div>
+
+						<div class="form-group">
+							<label>Tanggal Lahir</label> <input type="date"
+								class="form-control" id="tgl" name="tgl">
+						</div>
+
+						<div class="form-group">
+							<label>Tempat Lahir</label> <input type="text"
+								class="form-control" id="tmptLahir" name="tmptLahir"
+								placeholder="Tempat Lahir">
+						</div>
+
+
+
+					</form>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+					<button class="btn btn-primary" id="savebtn" type="button">Save</button>
+				</div>
 			</div>
-		</form>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
 	</div>
 
 </div>
 
 <th:block layout:fragment="add-scripts">
-	<script type="text/javascript">
-		$('#formprofile').submit(
 
-			function (event) {
-				event.preventDefault();
-				var $inputs = $('#formprofile :input');
-				var values = {};
-				$inputs.each(function () {
-				});
-				$('#bodytable').append(
-					"<tr><td>" + $("#name").val() + "</td><td>"
-					+ $("#adress").val() + "</td><td>"
-					+ $("#birthday").val() + "</td><td>"
-					+ $("#age").val() + "</td><td>"
-					+ $('#religion option:selected').val()
-					+ "</td><td>"
-					+ $('input[name=gender]:checked').val()
-					+ "</td></tr>");
-				$("input[type=text],textarea").val("");
-				$("input[type=date],textarea").val("");
-
-			});
-		
-
-		// AJAX code to submit form.
-		    $.ajax({
-		    // instead of type use method
-		    method: "POST",
-		    url: "http://localhost:1616/person",
-		    // instead  dataString i just serialize the form like below this serialize function bind all data into a string so no need to worry about url endcoding
-		    data: $('#form_id').serialize(),
-		    cache: false,
-		    success: function(responseText) {
-		        // you can see the result here
-		        console.log(responseText)
-		        alert("ok"); 
-		    }
-		    });
-		}
-		
-	</script>
-
-	<script type="text/javascript">
-		$(document).ready(function () {
-			$('#resetbutton').click(function () {
-				$("#mytable").find("tr:gt(0)").remove();
-			});
-		});
-	</script>
-
-	<script type="text/javascript">
-		$('.success').click(function () {
-			const Toast = Swal.mixin({
-				toast: true,
-				position: 'top-end',
-				showConfirmButton: false,
-				timer: 3000,
-				timerProgressBar: true,
-				onOpen: (toast) => {
-					toast.addEventListener('mouseenter', Swal.stopTimer)
-					toast.addEventListener('mouseleave', Swal.resumeTimer)
-				}
-			})
-
-			Toast.fire({
-				icon: 'success',
-				title: 'Profile entered successfully'
-			})
+	<script th:src="@{/assets/js/biodata.js}"></script>
+	
+	<script>
+		$('#btn-tambah-biodata').click(function() {
+			formBiodata.resetForm();
+			$('#modal-biodata').modal('show')
 		});
 
-		$('.resetbutt').click(function () {
-
-			Swal.fire({
-				title: 'Table is reset',
-				width: 600,
-				padding: '3em',
-				background: '#fff url(/images/trees.png)',
-				backdrop: `
-				    rgba(192,192,192,0.3)
-				    url("https://tenor.com/view/nyancat-gif-5210927")
-				    left top
-				    no-repeat
-				  `
-			})
-
-		});
+		$('#savebtn').click(function() {
+			formBiodata.saveForm()
+		})
 	</script>
-
-
 
 </th:block>
 
