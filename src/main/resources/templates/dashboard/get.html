@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html layout:decorate="~{base}" xmlns:th="http://www.thymeleaf.org"
-	style="height: auto;">
+<html layout:decorate="~{base}" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 
 <div class="row mb-2" layout:fragment="content-header">
 	<div class="col-sm-6">
@@ -16,7 +16,27 @@
 
 <div layout:fragment="content-body">
 
-
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">Search data by Nik</h3>
+			</div>
+			<div>
+				
+					<div class="form-group">
+						<input class="form-control" type="text" placeholder="Search data by Nik"
+							aria-label="Search" id="searchnik" name="searchnik">
+						<div class="input-group-append">
+							<button class="btn btn-navbar" id="searchnikbtn" type="button">
+								<i class="fas fa-search"></i>
+							</button>
+						</div>
+					</div>
+				
+			</div>
+		</div>
+		<!-- /.card -->
+	</div>
 
 	<div class="card card-primary">
 		<div class="card-header">
@@ -24,26 +44,7 @@
 		</div>
 		<div class="card-body">
 			<table id="mytable" class="table table-bordered">
-				<thead>
-					<tr>
-						<th>Nik</th>
-						<th>Nama</th>
-						<th>Alamat</th>
-						<th>Nomor hp</th>
-						<th>Tanggal Lahir</th>
-						<th>Tempat Lahir</th>
-						<th>Umur</th>
-						<th>Pendidikan Terakhir</th>
-					</tr>
-				</thead>
-				<tbody id="bodytable">
-
-				</tbody>
 			</table>
-			<div class="card-footer">
-				<button id="resetbutton" type="reset"
-					class="btn btn-primary resetbutt">Reset</button>
-			</div>
 		</div>
 	</div>
 
@@ -51,103 +52,24 @@
 
 <th:block layout:fragment="add-scripts">
 
+	<script th:src="@{/assets/js/biodata.js}"></script>
+
 	<script type="text/javascript">
-		$(function() {
-			$('#mytable').DataTable({
-				"lengthChange" : false,
-				"autoWidth" : false,
-				"responsive" : true,
-			});
-		});
+		// $(function () {
+		// 	$('#mytable').DataTable({
+		// 		"lengthChange": false,
+		// 		"searching": false,
+		// 		"autoWidth": false,
+		// 		"responsive": true,
+		// 	});
+		// });
 	</script>
 
-	<script type="text/javascript">
-	
-	var $getbio = $('#getbio');
-	
-	$.ajax({
-		type: 'GET',
-		url: '/person',
-		success: function(orders){
-			$.each(orders, function(i, order) {
-				$orders.append('<li>name:' + order.name +',drink:' + order.drink +'</li>)
-			})
-		}
-	})
-	
-	
-	
-	
-        $('#formprofile').submit(
-
-            function (event) {
-                event.preventDefault();
-                var $inputs = $('#formprofile :input');
-                var values = {};
-                $inputs.each(function () {
-                });
-                $('#bodytable').append(
-                    "<tr><td>" + $("#name").val() + "</td><td>"
-                    + $("#adress").val() + "</td><td>"
-                    + $("#birthday").val() + "</td><td>"
-                    + $("#age").val() + "</td><td>"
-                    + $('#religion option:selected').val()
-                    + "</td><td>"
-                    + $('input[name=gender]:checked').val()
-                    + "</td></tr>");
-                $("input[type=text],textarea").val("");
-                $("input[type=date],textarea").val("");
-
-            });
-    </script>
-
-	<script type="text/javascript">
-        $(document).ready(function () {
-            $('#resetbutton').click(function () {
-                $("#mytable").find("tr:gt(0)").remove();
-            });
-        });
-    </script>
-
-	<script type="text/javascript">
-        $('.success').click(function () {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                onOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
-            Toast.fire({
-                icon: 'success',
-                title: 'Profile entered successfully'
-            })
-        });
-
-        $('.resetbutt').click(function () {
-
-            Swal.fire({
-                title: 'Table is reset',
-                width: 600,
-                padding: '3em',
-                background: '#fff url(/images/trees.png)',
-                backdrop: `
-				    rgba(192,192,192,0.3)
-				    url("https://tenor.com/view/nyancat-gif-5210927")
-				    left top
-				    no-repeat
-				  `
-            })
-
-        });
-    </script>
-
-
+	<script>
+		$('#searchnikbtn').click(function () {
+			formBiodata.getBiodata($("#searchnik").val())
+		});
+	</script>
 
 </th:block>
 
