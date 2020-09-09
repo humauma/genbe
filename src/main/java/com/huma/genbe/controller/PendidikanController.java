@@ -25,7 +25,7 @@ public class PendidikanController {
 		this.perRep = perRep;
 	}
 
-	@PostMapping("/{idPerson}")
+	@PostMapping("/pakeid")
 	public ErrorDtoInput insert(@RequestBody List<PendidikanDtoInput> dto, @RequestParam Integer idPerson) {
 		ErrorDtoInput errorDto = new ErrorDtoInput();
 		try {
@@ -33,9 +33,9 @@ public class PendidikanController {
 				List<PendidikanEntity> pendidikanEntity = dto.stream().map(x -> convertToEntity(x, idPerson))
 						.collect(Collectors.toList());
 				pendRep.saveAll(pendidikanEntity);
+				errorDto.setStatus("true");
+				errorDto.setMessage("data berhasil masuk");
 			}
-			errorDto.setStatus("true");
-			errorDto.setMessage("data berhasil masuk");
 		} catch (Exception e) {
 			errorDto.setStatus("false");
 			errorDto.setMessage("data gagal masuk");

@@ -1,235 +1,173 @@
 <!DOCTYPE html>
-<html layout:decorate="~{base}" xmlns:th="http://www.thymeleaf.org" style="height: auto;">
+<html layout:decorate="~{base}" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 
 <div class="row mb-2" layout:fragment="content-header">
     <div class="col-sm-6">
-        <h1>Style 3</h1>
+        <h1>Input Pendidikan</h1>
     </div>
-    <!--             <div class="col-sm-6"> -->
-    <!--               <ol class="breadcrumb float-sm-right"> -->
-    <!--                 <li class="breadcrumb-item"><a href="#">Home</a></li> -->
-    <!--                 <li class="breadcrumb-item active">General Form</li> -->
-    <!--               </ol> -->
-    <!--             </div> -->
+    <!-- 	<div class="col-sm-6"> -->
+    <!-- 		<ol class="breadcrumb float-sm-right"> -->
+    <!-- 			<li class="breadcrumb-item"><a href="#">Home</a></li> -->
+    <!-- 			<li class="breadcrumb-item active">General Form</li> -->
+    <!-- 		</ol> -->
+    <!-- 	</div> -->
 </div>
 
 <div layout:fragment="content-body">
 
-    <form role="form" id="formprofile">
-        <div class="row">
-
-            <div class="col-md-6 d-flex">
-                <div class="card card-primary flex-fill">
-                    <div class="card-header">
-                        <h3 class="card-title">Profile Input</h3>
-                    </div>
-                    <!-- /.card-header -->
-
-                    <div class="card-body">
-
-
-
-
-                        <div class="form-group">
-                            <label for="nama">Name</label> <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Name">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="adress">Adress</label> <input type="text" class="form-control" id="adress"
-                                name="adress" placeholder="Adress">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="birthday">Birthday</label> <input type="date" class="form-control" id="birthday"
-                                name="birthday">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="filler"> </label>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="filler"> </label>
-                        </div>
-
-
-                    </div>
-
+    <div class="col-12">
+        <div class="card">
+            <div class="form-group">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="tambahjenjang" type="button">
+                        Tambah Data
+                    </button>
                 </div>
-            </div>
-
-            <div class="col-md-6 d-flex">
-                <div class="card card-success flex-fill">
-                    <div class="card-header">
-                        <h3 class="card-title">Profile Input</h3>
-                    </div>
-                    <!-- /.card-header -->
-
-                    <div class="card-body">
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="age">Age:</label> <input class="form-control" type="text" id="age"
-                                    name="age">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="religion">Religion:</label> <select class="form-control" id="religion"
-                                    name="religion">
-                                    <option value="Islam">Islam</option>
-                                    <option value="Katolik">Katolik</option>
-                                    <option value="Kristen">Kristen</option>
-                                    <option value="Hindu">Hindu</option>
-                                    <option value="Buddha">Buddha</option>
-                                    <option value="Khonghucu">Khonghucu</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <label for="gender">Gender:</label>
-                                <!-- radio -->
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="gender" name="gender"
-                                            value="Male"> <label class="form-check-label">Male</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="gender" name="gender"
-                                            value="Female"> <label class="form-check-label">Female</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="gender" name="gender"
-                                            value="Other"> <label class="form-check-label">Other</label>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-
-                        </div>
-
-                        <!-- /.card-body -->
-
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary success">Submit</button>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-
-        </div>
-    </form>
-
-
-
-    <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Table Profile</h3>
-        </div>
-        <div class="card-body">
-            <table id="mytable" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Adress</th>
-                        <th>Birthday</th>
-                        <th>Age</th>
-                        <th>Religion</th>
-                        <th>Gender</th>
-                    </tr>
-                </thead>
-                <tbody id="bodytable">
-
-                </tbody>
-            </table>
-            <div class="card-footer">
-                <button id="resetbutton" type="reset" class="btn btn-primary resetbutt">Reset</button>
             </div>
         </div>
     </div>
 
+<!--     <form role="form"> -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Tabel Pendidikan</h3>
+            </div>
+            <div class="card-body">
+                <table id="tablePendidikan" class="table table-bordered">
+                </table>
+            </div>
+            <div>
+                <input class="form-control" type="text" placeholder="Masukkan id Person" id="idPerson" name="idPerson">
+                <button class="btn btn-primary" id="submitPendidikan" type="button">Submit</button>
+            </div>
+        </div>
+<!--     </form> -->
+
+    <div class="modal fade" id="modal-pendidikan">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Form Pendidikan</h4>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-header"></div>
+                    <form id="formpendidikan" role="form">
+                        <input name="id" type="hidden" />
+
+                        <div class="form-group">
+                            <label for="nama">Jenjang Pendidikan</label> <input type="text" class="form-control"
+                                id="jenjang" name="jenjang" placeholder="Jenjang Pendidikan">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Institusi Pendidikan</label> <input type="text" class="form-control" id="institusi"
+                                name="institusi" placeholder="Institusi Pendidikan">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tahun Masuk</label> <input type="text" class="form-control" id="tahunMasuk"
+                                name="tahunMasuk" placeholder="Tahun Masuk">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tahun Lulus</label> <input type="text" class="form-control" id="tahunLulus"
+                                name="tahunLulus" placeholder="Tahun Lulus">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                    <button class="btn btn-primary" id="savebtnPendidikan" type="button">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+    <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Form Pendidikan</h4>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-header"></div>
+                    <form id="formEdit" role="form">
+                        <input name="id" type="hidden" />
+
+                        <div class="form-group">
+                            <label for="nama">Jenjang Pendidikan</label> <input type="text" class="form-control"
+                                id="jenjang" name="jenjang" placeholder="Jenjang Pendidikan">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Institusi Pendidikan</label> <input type="text" class="form-control" id="institusi"
+                                name="institusi" placeholder="Institusi Pendidikan">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tahun Masuk</label> <input type="text" class="form-control" id="tahunMasuk"
+                                name="tahunMasuk" placeholder="Tahun Masuk">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tahun Lulus</label> <input type="text" class="form-control" id="tahunLulus"
+                                name="tahunLulus" placeholder="Tahun Lulus">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                    <button class="btn btn-primary" id="savebtnEdit" type="button">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+
 </div>
 
 <th:block layout:fragment="add-scripts">
-    <script type="text/javascript">
-        $('#formprofile').submit(
 
-            function (event) {
-                event.preventDefault();
-                var $inputs = $('#formprofile :input');
-                var values = {};
-                $inputs.each(function () {
-                });
-                $('#bodytable').append(
-                    "<tr><td>" + $("#name").val() + "</td><td>"
-                    + $("#adress").val() + "</td><td>"
-                    + $("#birthday").val() + "</td><td>"
-                    + $("#age").val() + "</td><td>"
-                    + $('#religion option:selected').val()
-                    + "</td><td>"
-                    + $('input[name=gender]:checked').val()
-                    + "</td></tr>");
-                $("input[type=text],textarea").val("");
-                $("input[type=date],textarea").val("");
+    <script th:src="@{/assets/js/pendidikan.js}"></script>
 
-            });
+    <script>
 
-
-
-
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#resetbutton').click(function () {
-                $("#mytable").find("tr:gt(0)").remove();
-            });
-        });
-    </script>
-
-    <script type="text/javascript">
-        $('.success').click(function () {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                onOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
-            Toast.fire({
-                icon: 'success',
-                title: 'Profile entered successfully'
-            })
+        $('#tambahjenjang').click(function () {
+            formPendidikan.resetForm();
+            $('#modal-pendidikan').modal('show')
         });
 
-        $('.resetbutt').click(function () {
+        var pendidikantotal = [];
 
-            Swal.fire({
-                title: 'Table is reset',
-                width: 600,
-                padding: '3em',
-                background: '#fff url(/images/trees.png)',
-                backdrop: `
-				    rgba(192,192,192,0.3)
-				    url("https://tenor.com/view/nyancat-gif-5210927")
-				    left top
-				    no-repeat
-				  `
-            })
-
+        $('#savebtnPendidikan').click(function () {
+            formPendidikan.savePendidikanTable();
         });
+
+        $('#savebtnEdit').click(function () {
+            formPendidikan.saveEditTable();
+        });
+
+        $('#submitPendidikan').click(function () {
+            formPendidikan.postPendidikan($("#idPerson").val(), pendidikantotal);
+            pendidikantotal = [];
+        });
+
     </script>
-
-
 
 </th:block>
 

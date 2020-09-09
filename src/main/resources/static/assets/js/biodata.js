@@ -1,60 +1,3 @@
-var tableBiodata = {
-    create: function () {
-        // jika table tersebut datatable, maka clear and destroy
-        if ($.fn.DataTable.isDataTable('#tableBiodata')) {
-            //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
-            $('#tableBiodata').DataTable().clear();
-            $('#tableBiodata').DataTable().destroy();
-        }
-
-        $.ajax({
-            url: '/person',
-            method: 'get',
-            contentType: 'application/json',
-            success: function (res, status, xhr) {
-                if (xhr.status == 200 || xhr.status == 201) {
-                    $('#tableBiodata').DataTable({
-                        data: res,
-                        columns: [
-                            {
-                                title: "Nama",
-                                data: "nama"
-                            },
-                            {
-                                title: "Alamat",
-                                data: "alamat"
-                            },
-                            {
-                                title: "Golongan Darah",
-                                data: "golonganDarah"
-                            },
-                            {
-                                title: "Tempat Lahir",
-                                data: "tempatLahir"
-                            },
-                            {
-                                title: "Action",
-                                data: null,
-                                render: function (data, type, row) {
-                                    return "<button class='btn-primary' onclick=formBiodata.setEditData('" + data.id + "')>Edit</button>"
-                                }
-                            }
-                        ]
-                    });
-
-                } else {
-
-                }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
-
-
-    }
-};
-
 var formBiodata = {
     resetForm: function () {
         $('#formprofile')[0].reset();
@@ -174,9 +117,9 @@ var formBiodata = {
                     Swal.fire({
                         position: 'top-end',
                         icon: 'error',
-                        title: result.message,
+                        title: result[0].message,
                         showConfirmButton: false,
-                        timer: 1000
+                        timer: 3000
                     })
 
                 }
