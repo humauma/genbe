@@ -19,8 +19,21 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
-				<div class="col-md-6">
-					<button class="btn btn-block btn-outline-primary btn-lg" id="btn-tambah-biodata">Tambah</button>
+				<div class="row">
+					<div class="col-md-6">
+						<h2>Input Biodata</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<button class="btn btn-block btn-outline-primary btn-lg" id="btn-tambah-biodata">Click untuk tambah data</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="card-body table-responsive">
+						<table class="table table-striped table-bordered table-hover nowrap" id="tableBiodata"
+							style="width:100%"></table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -91,6 +104,8 @@
 	<script th:src="@{/assets/js/biodata.js}"></script>
 
 	<script>
+		tableBiodata.create();
+
 		$('#btn-tambah-biodata').click(function () {
 			formBiodata.resetForm();
 			$('#modal-biodata').modal('show')

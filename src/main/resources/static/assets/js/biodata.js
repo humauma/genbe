@@ -1,3 +1,53 @@
+var tableBiodata = {
+    create: function () {
+        // jika table tersebut datatable, maka clear and dostroy
+        if ($.fn.DataTable.isDataTable('#tableBiodata')) {
+            //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
+            $('#tableBiodata').DataTable().clear();
+            $('#tableBiodata').DataTable().destroy();
+        }
+
+        $.ajax({
+            url: '/person/all',
+            method: 'get',
+            contentType: 'application/json',
+            success: function (res, status, xhr) {
+                if (xhr.status == 200 || xhr.status == 201) {
+                    $('#tableBiodata').DataTable({
+                        data: res,
+                        columns: [
+                            {
+                                title: "Nik",
+                                data: "nik"
+                            },
+                            {
+                                title: "Name",
+                                data: "name"
+                            },
+                            {
+                                title: "Action",
+                                data: null,
+                                render: function (data, type, row) {
+                                    return "<button class='btn-primary' onclick=formBiodata.setEditData('" + data.nik + "')>Edit</button>"
+                                }
+                            }
+                        ]
+                    });
+
+                } else {
+
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+
+
+    }
+};
+
+
 var formBiodata = {
     resetForm: function () {
         $('#formprofile')[0].reset();
@@ -15,6 +65,7 @@ var formBiodata = {
             data: JSON.stringify(dataResult),
             success: function (result) {
                 console.log(result);
+                tableBiodata.create();
                 $('#modal-biodata').modal('hide')
 
                 if (result.status == 'true') {
@@ -128,6 +179,29 @@ var formBiodata = {
                 console.log(err);
             }
         });
+
+    }, setEditData: function (nik) {
+        formBiodata.resetForm();
+
+        $.ajax({
+            url: '/person/' + nik,
+            method: 'get',
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (res) {
+                //   if (xhr.status == 200 || xhr.status == 201) {
+                $('#formprofile').fromJSON(JSON.stringify(res[0].data));
+                $('#modal-biodata').modal('show')
+
+                //    } else {
+
+                //  }
+            },
+            erorrr: function (err) {
+                console.log(err);
+            }
+        });
+
 
     }
 

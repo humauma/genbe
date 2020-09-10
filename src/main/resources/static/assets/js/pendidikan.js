@@ -1,7 +1,7 @@
 
 var idList = 0;
 var formPendidikan = {
-    
+
     resetForm: function () {
         $('#formpendidikan')[0].reset();
     },
@@ -15,7 +15,7 @@ var formPendidikan = {
                 icon: 'error',
                 title: 'Your data is failed to be saved',
                 showConfirmButton: false,
-                timer: 10000
+                timer: 3000
             });
 
         } else {
@@ -66,72 +66,29 @@ var formPendidikan = {
         //return pendidikantotal
 
     },
+
     setEditData: function (idArray) {
-        // console.log(pendidikantotal);
-        //console.log(idArray);
-        var isi = pendidikantotal[idArray];
-        //console.log(isi);
-        $('#formEdit').fromJSON(JSON.stringify(isi));
-        $('#modal-edit').modal('show')
-        idList = idArray
+        $('#formpendidikan').fromJSON(JSON.stringify(pendidikantotal[idArray]));
+        $('#modal-pendidikan').modal('show')
+        cond = idArray
     },
 
-    saveEditTable: function () {
-        var dummysimpen = getJsonForm($("#formEdit").serializeArray(), true);
-        pendidikantotal[idList] = dummysimpen;
+    saveEdit: function () {
+        var dummysimpen = getJsonForm($("#formpendidikan").serializeArray(), true);
+        pendidikantotal[cond] = dummysimpen;
 
-        $('#modal-edit').modal('hide')
-
-        if ($.fn.DataTable.isDataTable('#tablePendidikan')) {
-            //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
-            $('#tablePendidikan').DataTable().clear();
-            $('#tablePendidikan').DataTable().destroy();
-            // console.log('masuk if');
-        }
-
-        $('#tablePendidikan').DataTable({
-            "lengthChange": false,
-            "searching": false,
-            "autoWidth": false,
-            "responsive": false,
-            "bPaginate": false,
-            "bInfo": false,
-            data: pendidikantotal,
-            columns: [
-                {
-                    title: "Jenjang Pendidikan",
-                    data: "jenjang"
-                },
-                {
-                    title: "Institusi Pendidikan",
-                    data: "institusi"
-                },
-                {
-                    title: "Tahun Masuk",
-                    data: "tahunMasuk"
-                },
-                {
-                    title: "Tahun Lulus",
-                    data: "tahunLulus"
-                },
-                {
-                    title: "Action",
-                    data: null,
-                    render: function (data, type, full, meta) {
-                        return "<button class='btn-primary' onclick=formPendidikan.setEditData('" + meta.row + "')>Edit</button>"
-                    }
-                }
-            ]
-        });
+        
     },
 
-    savePendidikanTable: function () {
+    savePendidikan: function () {
 
         var dummysimpen = getJsonForm($("#formpendidikan").serializeArray(), true);
         pendidikantotal.push(dummysimpen);
 
         // console.log(pendidikantotal);
-        $('#modal-pendidikan').modal('hide');
+    },
+
+    createTable: function () {
 
         if ($.fn.DataTable.isDataTable('#tablePendidikan')) {
             //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
@@ -175,7 +132,6 @@ var formPendidikan = {
             ]
         });
 
-        // return pendidikantotal;
 
     }
 };

@@ -43,9 +43,7 @@ public class PersonController {
 		List<PersonDtoOutput> personDto = personEntity.stream().map(this::convertToDtoOut).collect(Collectors.toList());
 		return personDto;
 	}
-	
-	
-	
+
 	@GetMapping("/{nik}")
 	public List<Object> get(@PathVariable String nik) {
 //	public PersonDtoOutput get(@PathVariable String nik) {
@@ -55,9 +53,9 @@ public class PersonController {
 		if (nik.length() == 16) {
 			if (perRep.findByNikEntLike(nik).isEmpty() == false) {
 				PersonEntity personEntityList = perRep.findByNikEntLike(nik).get(0);
-				//int idPerson = personEntityList.getIdPerEnt();
+				// int idPerson = personEntityList.getIdPerEnt();
 				PersonDtoOutput personDto = convertToDtoOut(personEntityList);
-				//personDto.setPddknTerakhir(pendRep.pendidikanTerakhir(idPerson));
+				// personDto.setPddknTerakhir(pendRep.pendidikanTerakhir(idPerson));
 				errorDto.setStatus("true");
 				errorDto.setMessage("success");
 				errorDto.setData(personDto);
@@ -78,20 +76,46 @@ public class PersonController {
 
 	@PostMapping
 	public ErrorDtoInput insert(@RequestBody PersonDtoInput dto) {
+
 		ErrorDtoInput errorDto = new ErrorDtoInput();
 		java.sql.Date dob = dto.getTgl();
 		LocalDate today = LocalDate.now();
 		LocalDate birthDate = dob.toLocalDate();
 		Period p = Period.between(birthDate, today);
 		if (((p.getYears() >= 30)) && (dto.getNik().length() == 16)) {
-			errorDto.setStatus("true");
-			errorDto.setMessage("data berhasil masuk");
-			PersonEntity personEntity = convertToEntityPer(dto);
-			perRep.save(personEntity);
-			BiodataEntity biodataEntity = convertToEntityBio(dto);
-			biodataEntity.setIdPersonEnt(personEntity);
-			bioRep.save(biodataEntity);
-			return errorDto;
+			if (perRep.findByNikEntLike(dto.getNik()).isEmpty() == false) {
+
+				errorDto.setStatus("true");
+				errorDto.setMessage("data berhasil masuk");
+
+				PersonEntity personEntityExist = perRep.findByNikEntLike(dto.getNik()).get(0);
+				PersonEntity personEntity = convertToEntityPer(dto);
+				personEntity.setIdPerEnt(personEntityExist.getIdPerEnt());
+				perRep.save(personEntity);
+
+				BiodataEntity biodataEntityExist = bioRep.findAllByPersonIdPerEnt(personEntityExist.getIdPerEnt());
+				BiodataEntity biodataEntity = convertToEntityBio(dto);
+				biodataEntity.setIdBioEnt(biodataEntityExist.getIdBioEnt());
+				//biodataEntity.setIdPersonEnt(biodataEntityExist.getIdPersonEnt());
+				biodataEntity.setIdPersonEnt(personEntity);
+
+				bioRep.save(biodataEntity);
+				
+				return errorDto;
+
+			} else {
+				errorDto.setStatus("true");
+				errorDto.setMessage("data berhasil masuk");
+				
+				PersonEntity personEntity = convertToEntityPer(dto);
+				perRep.save(personEntity);
+				
+				BiodataEntity biodataEntity = convertToEntityBio(dto);
+				biodataEntity.setIdPersonEnt(personEntity);
+				bioRep.save(biodataEntity);
+				return errorDto;
+
+			}
 		} else if (((p.getYears() <= 30)) && (dto.getNik().length() == 16)) {
 			errorDto.setStatus("false");
 			errorDto.setMessage("data gagal masuk, umur kurang dari 30");
@@ -104,10 +128,6 @@ public class PersonController {
 		errorDto.setStatus("false");
 		errorDto.setMessage("data gagal masuk, nik tidak 16digit dan umur kurang dari 30");
 		return errorDto;
-		// }
-		// ErrorDtoInput errorDto = new ErrorDtoInput();
-		// perServ.error(dto);
-		// return dto;
 
 	}
 

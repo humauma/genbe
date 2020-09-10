@@ -28,21 +28,21 @@
         </div>
     </div>
 
-<!--     <form role="form"> -->
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">Tabel Pendidikan</h3>
-            </div>
-            <div class="card-body">
-                <table id="tablePendidikan" class="table table-bordered">
-                </table>
-            </div>
-            <div>
-                <input class="form-control" type="text" placeholder="Masukkan id Person" id="idPerson" name="idPerson">
-                <button class="btn btn-primary" id="submitPendidikan" type="button">Submit</button>
-            </div>
+    <!--     <form role="form"> -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Tabel Pendidikan</h3>
         </div>
-<!--     </form> -->
+        <div class="card-body">
+            <table id="tablePendidikan" class="table table-bordered">
+            </table>
+        </div>
+        <div>
+            <input class="form-control" type="text" placeholder="Masukkan id Person" id="idPerson" name="idPerson">
+            <button class="btn btn-primary" id="submitPendidikan" type="button">Submit</button>
+        </div>
+    </div>
+    <!--     </form> -->
 
     <div class="modal fade" id="modal-pendidikan">
         <div class="modal-dialog modal-lg">
@@ -91,54 +91,6 @@
     </div>
 
 
-    <div class="modal fade" id="modal-edit">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Form Pendidikan</h4>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="card-header"></div>
-                    <form id="formEdit" role="form">
-                        <input name="id" type="hidden" />
-
-                        <div class="form-group">
-                            <label for="nama">Jenjang Pendidikan</label> <input type="text" class="form-control"
-                                id="jenjang" name="jenjang" placeholder="Jenjang Pendidikan">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Institusi Pendidikan</label> <input type="text" class="form-control" id="institusi"
-                                name="institusi" placeholder="Institusi Pendidikan">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Tahun Masuk</label> <input type="text" class="form-control" id="tahunMasuk"
-                                name="tahunMasuk" placeholder="Tahun Masuk">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Tahun Lulus</label> <input type="text" class="form-control" id="tahunLulus"
-                                name="tahunLulus" placeholder="Tahun Lulus">
-                        </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-                    <button class="btn btn-primary" id="savebtnEdit" type="button">Save</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-
-
-
 </div>
 
 <th:block layout:fragment="add-scripts">
@@ -146,21 +98,30 @@
     <script th:src="@{/assets/js/pendidikan.js}"></script>
 
     <script>
-
+        var cond = -1;
+        var pendidikantotal = [];
         $('#tambahjenjang').click(function () {
             formPendidikan.resetForm();
             $('#modal-pendidikan').modal('show')
         });
 
-        var pendidikantotal = [];
 
         $('#savebtnPendidikan').click(function () {
-            formPendidikan.savePendidikanTable();
+
+            if (cond >= 0) {
+                formPendidikan.saveEdit();
+                formPendidikan.createTable();
+                $('#modal-pendidikan').modal('hide')
+            } else {
+                formPendidikan.savePendidikan();
+                formPendidikan.createTable();
+                $('#modal-pendidikan').modal('hide')
+            }
         });
 
-        $('#savebtnEdit').click(function () {
-            formPendidikan.saveEditTable();
-        });
+        // $('#savebtnEdit').click(function () {
+        //     formPendidikan.saveEditTable();
+        // });
 
         $('#submitPendidikan').click(function () {
             formPendidikan.postPendidikan($("#idPerson").val(), pendidikantotal);
